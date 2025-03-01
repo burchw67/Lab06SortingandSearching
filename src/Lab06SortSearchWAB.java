@@ -9,20 +9,20 @@ public class Lab06SortSearchWAB
         //Necessary strings
         String introString =
                 "Welcome to the Supermarket Checkout System\n" +
-                "Author: William Anthony Burch\n" +
-                "Select an Option:\n\n" +
-                "1. Create an array of 15 random elements from 10 to 99\n" +
-                "2. Search for an element using linear search\n" +
-                "3. Search for an element using binary search\n" +
-                "4. Sort the array using Selection Sort\n" +
-                "5. Sort the array using Insertion Sort\n" +
-                "6. Sort the array using Bubble Sort\n" +
-                "7. Sort the array using Bubble Sort (Faster)\n" +
-                "8. Sort the array using Merge Sort\n" +
-                "9. Sort the array using Lucky Sort\n" +
-                "10. Reset the array\n" +
-                "11. Print the array\n" +
-                "12. Quit\n";
+                        "Author: William Anthony Burch\n" +
+                        "Select an Option:\n\n" +
+                        "1. Create an array of 15 random elements from 10 to 99\n" +
+                        "2. Search for an element using linear search\n" +
+                        "3. Search for an element using binary search\n" +
+                        "4. Sort the array using Selection Sort\n" +
+                        "5. Sort the array using Insertion Sort\n" +
+                        "6. Sort the array using Bubble Sort\n" +
+                        "7. Sort the array using Bubble Sort (Faster)\n" +
+                        "8. Sort the array using Merge Sort\n" +
+                        "9. Sort the array using Lucky Sort\n" +
+                        "10. Reset the array\n" +
+                        "11. Print the array\n" +
+                        "12. Quit\n";
 
         String quit = "N";
         String choice = "x";
@@ -38,6 +38,11 @@ public class Lab06SortSearchWAB
 
         //Random Number Generator
         Random randal = new Random();
+
+        //Boolean for choice 3 confirmation
+        boolean sorted = false;
+
+        System.out.println(introString);
 
         while (quit.charAt(0) != 'Y' && quit.charAt(0) != 'y')
         {
@@ -57,11 +62,12 @@ public class Lab06SortSearchWAB
                         originArr[i] = intArr[i];
                     }
 
-                    System.out.println("\nArray populated with 15 random elements successfully.\n");
+                    System.out.println("\nArray populated with 15 random elements successfully.");
+                    sorted = false;
                     break;
 
                 case "2":
-                    System.out.print("Enter an integer to search for: ");
+                    System.out.print("Enter an integer to search for using linear search: ");
                     choice = scanMan.nextLine();
 
                     alpInt = linearSearch(intArr, choice);
@@ -77,7 +83,12 @@ public class Lab06SortSearchWAB
                     break;
 
                 case "3":
-                    System.out.print("Enter an integer to search for: ");
+                    if(!sorted)
+                    {
+                        System.out.print("\nThe list must be sorted for binary search to work, try again!\n");
+                        break;
+                    }
+                    System.out.print("Enter an integer to search for using binary search: ");
                     choice = scanMan.nextLine();
 
                     alpInt = linearSearch(intArr, choice);
@@ -102,6 +113,7 @@ public class Lab06SortSearchWAB
                     System.out.println(" ");
 
                     System.out.println("\n\nArray sorted in " + selectionSort(intArr) + " passes, using Selection Sort");
+                    sorted = true;
                     break;
 
                 case "5":
@@ -114,7 +126,44 @@ public class Lab06SortSearchWAB
                     System.out.println(" ");
 
                     System.out.println("\n\nArray sorted in " + insertionSort(intArr) + " passes, using Insertion Sort");
+                    sorted = true;
                     break;
+
+                case "6":
+                    System.out.print("\nOriginal array: ");
+
+                    for(int x : intArr)
+                    {
+                        System.out.print(x + " ");
+                    }
+                    System.out.println(" ");
+
+                    System.out.println("\n\nArray sorted in " + bubbleSortSlow(intArr) + " passes, using the slow bubble Sort");
+                    sorted = true;
+                    break;
+
+                case "7":
+                    System.out.print("\nOriginal array: ");
+
+                    for(int x : intArr)
+                    {
+                        System.out.print(x + " ");
+                    }
+                    System.out.println(" ");
+
+                    System.out.println("\n\nArray sorted in " + bubbleSort(intArr) + " passes, using the optimized bubble Sort");
+                    sorted = true;
+                    break;
+
+                case "8":
+                    mergeSort(intArr,15);
+                    System.out.println("\n\nArray sorted using the optimized merge Sort");
+                    break;
+
+                case "9":
+
+
+
 
                 case "10":
                     for(int i = 0; i < 15; i++)
@@ -132,11 +181,11 @@ public class Lab06SortSearchWAB
                     System.out.println("");
                     break;
             }
-            }
         }
+    }
 
 
-
+    //////////////////////---------------Worker Methods---------------//////////////////////
     public static int linearSearch(int[] arr, String intChoice)
     {
         //'Hit' counter
@@ -224,14 +273,17 @@ public class Lab06SortSearchWAB
     public static int selectionSort(int[] arr)
     {
         int passCount = 0;
-        for (int i = 0; i < arr.length - 1; i++) {
+        for (int i = 0; i < arr.length - 1; i++)
+        {
 
             // Assume the current position holds the minimum element
             int minIndex = i;
 
             // Iterate through the unsorted portion to find the actual minimum
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[j] < arr[minIndex]) {
+            for (int j = i + 1; j < arr.length; j++)
+            {
+                if (arr[j] < arr[minIndex])
+                {
 
                     // Update minIndex if a smaller element
                     // is found
@@ -261,14 +313,16 @@ public class Lab06SortSearchWAB
     {
         int passCount = 0;
 
-        for (int i = 1; i < arr.length; ++i) {
+        for (int i = 1; i < arr.length; ++i)
+        {
             int key = arr[i];
             int j = i - 1;
 
             /* Move elements of arr[0..i-1], that are
                greater than key, to one position ahead
                of their current position */
-            while (j >= 0 && arr[j] > key) {
+            while (j >= 0 && arr[j] > key)
+            {
                 arr[j + 1] = arr[j];
                 j = j - 1;
             }
@@ -276,6 +330,135 @@ public class Lab06SortSearchWAB
         }
         return passCount;
     }
+
+    public static int bubbleSortSlow(int[] arr)
+    {
+        int passCount = 0;
+        boolean swapped = false;
+
+        int swap;
+        for (int i = 0; i < arr.length - 1; i++)
+        { // Loop for passes
+            swapped = false;
+            for (int j = 0; j < arr.length - 1; j++)
+            { // Inner loop for comparisons
+                if (arr[j] > arr[j + 1])
+                { // Swap if out of order
+                    swap = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = swap;
+                    swapped = true;
+                }
+            }
+
+            System.out.print("\nPass " + passCount + ": ");
+            for(int x : arr)
+            {
+                System.out.print(x + " ");
+            }
+            passCount++;
+            if(!swapped)
+            {
+                break;
+            }
+        }
+        return passCount;
+    }
+
+    public static int bubbleSort(int[] arr)
+    {
+        int passCount = 0;
+        boolean swapped = false;
+
+        int swap;
+        for (int i = 0; i < arr.length - 1; i++)
+        { // Loop for passes
+            swapped = false;
+            for (int j = 0; j < arr.length - 1 - i; j++)
+            { // Inner loop for comparisons
+                if (arr[j] > arr[j + 1])
+                { // Swap if out of order
+                    swap = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = swap;
+                    swapped = true;
+                }
+            }
+
+            if(!swapped)
+            {
+                return passCount;
+            }
+
+            passCount++;
+
+            System.out.print("\nPass " + passCount + ": ");
+            for(int x : arr)
+            {
+                System.out.print(x + " ");
+            }
+
+
+        }
+        return passCount;
+    }
+
+    public static void mergeSort(int[] arr, int n)
+    {
+        if (n < 2) {
+            return;
+        }
+        int mid = n / 2;
+        int[] l = new int[mid];
+        int[] r = new int[n - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = arr[i];
+        }
+        for (int i = mid; i < n; i++) {
+            r[i - mid] = arr[i];
+        }
+        mergeSort(l, mid);
+        mergeSort(r, n - mid);
+
+        merge(arr, l, r, mid, n - mid);
+    }
+
+    public static void merge(int[] a, int[] l, int[] r, int left, int right)
+    {
+
+        int i = 0, j = 0, k = 0;
+        while (i < left && j < right)
+        {
+            if (l[i] <= r[j])
+            {
+                a[k++] = l[i++];
+            }
+            else {
+                a[k++] = r[j++];
+            }
+        }
+        while (i < left)
+        {
+            a[k++] = l[i++];
+        }
+        while (j < right)
+        {
+            a[k++] = r[j++];
+        }
+    }
+
+    public static void luckySort(int[] arr)
+    {
+        int count = 0;
+        int Start = 0;
+        int Stop = arr.length - 1;
+
+        boolean smallest = false;
+
+        for(int i = Start; i < Stop; i++)
+        {
+
+        }
+    }
 }
-
-
