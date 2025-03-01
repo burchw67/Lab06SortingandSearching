@@ -9,8 +9,10 @@ public class Lab06SortSearchWAB
         //Necessary strings
         String introString =
                 "Welcome to the Supermarket Checkout System\n" +
-                        "Author: William Anthony Burch\n" +
-                        "Select an Option:\n\n" +
+                        "Author: William Anthony Burch\n";
+
+        String optionString =
+                "\nSelect an Option:\n\n" +
                         "1. Create an array of 15 random elements from 10 to 99\n" +
                         "2. Search for an element using linear search\n" +
                         "3. Search for an element using binary search\n" +
@@ -22,7 +24,9 @@ public class Lab06SortSearchWAB
                         "9. Sort the array using Lucky Sort\n" +
                         "10. Reset the array\n" +
                         "11. Print the array\n" +
-                        "12. Quit\n";
+                        "12. Quit\n"+
+                        "\nEnter your choice: ";
+
 
         String quit = "N";
         String choice = "x";
@@ -46,7 +50,7 @@ public class Lab06SortSearchWAB
 
         while (quit.charAt(0) != 'Y' && quit.charAt(0) != 'y')
         {
-            System.out.print("\nEnter your choice: ");
+            System.out.print(optionString);
             choice = scanMan.nextLine();
 
             switch (choice)
