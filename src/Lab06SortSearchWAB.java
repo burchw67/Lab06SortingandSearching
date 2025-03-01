@@ -161,12 +161,12 @@ public class Lab06SortSearchWAB
 
                 case "8":
                     mergeSort(intArr,15);
-                    System.out.println("\n\nArray sorted using the optimized merge Sort");
+                    System.out.println("\n\nArray sorted using merge Sort.");
                     break;
 
                 case "9":
-
-
+                    luckySort(intArr);
+                    break;
 
 
                 case "10":
@@ -184,14 +184,32 @@ public class Lab06SortSearchWAB
                     }
                     System.out.println("");
                     break;
+
+                case "12":
+                    System.out.print("Are you sure you want to quit? [Y/N]");
+                    quit = scanMan.nextLine();
+
+                    if(Character.toUpperCase(quit.charAt(0)) == 'N' || Character.toLowerCase(quit.charAt(0)) == 'n')
+                    {
+                        break;
+                    }
+                    else if(Character.toUpperCase(quit.charAt(0)) == 'Y' || Character.toLowerCase(quit.charAt(0)) == 'y')
+                    {
+                        quit = "yes";
+                        break;
+                    }
+                    else
+                    {
+                        break;
+                    }
             }
         }
     }
 
 
-    //////////////////////---------------Worker Methods---------------//////////////////////
+    //////////////////////---------------Sorting and Searching Methods---------------//////////////////////
     public static int linearSearch(int[] arr, String intChoice)
-    {
+    {//This search method is originally written by me
         //'Hit' counter
         int hitCount = 0;
 
@@ -227,7 +245,7 @@ public class Lab06SortSearchWAB
     }
 
     public static int binarySearch(int[] arr, String intChoice)
-    {
+    {//This search method was
         //'Hit' counter
         int hitCount = 0;
 
@@ -303,7 +321,7 @@ public class Lab06SortSearchWAB
                 arr[minIndex] = temp;
                 passCount++;
 
-                System.out.print("\nPass " + passCount + ": ");
+                System.out.print("\n");
                 for(int x : arr)
                 {
                     System.out.print(x + " ");
@@ -355,7 +373,7 @@ public class Lab06SortSearchWAB
                 }
             }
 
-            System.out.print("\nPass " + passCount + ": ");
+            System.out.print("\n");
             for(int x : arr)
             {
                 System.out.print(x + " ");
@@ -396,7 +414,7 @@ public class Lab06SortSearchWAB
 
             passCount++;
 
-            System.out.print("\nPass " + passCount + ": ");
+            System.out.print("\n");
             for(int x : arr)
             {
                 System.out.print(x + " ");
@@ -455,14 +473,47 @@ public class Lab06SortSearchWAB
     public static void luckySort(int[] arr)
     {
         int count = 0;
-        int Start = 0;
-        int Stop = arr.length - 1;
+        int start = 0;
+        int stop = arr.length - 1;
+        Random rand = new Random();
 
-        boolean smallest = false;
-
-        for(int i = Start; i < Stop; i++)
+        for (int n = start; n <= stop; n++)
         {
+            while (true)
+            {
+                count++;
 
+                // Shuffle the range [n, stop]
+                for (int i = n; i <= stop; i++) {
+                    int randomIndex = rand.nextInt(stop - n + 1) + n;
+                    int temp = arr[i];
+                    arr[i] = arr[randomIndex];
+                    arr[randomIndex] = temp;
+                }
+
+                // Find the smallest value in range [n, stop]
+                int min = arr[n];
+                for (int i = n + 1; i <= stop; i++)
+                {
+                    if (arr[i] < min)
+                    {
+                        min = arr[i];
+                    }
+                }
+
+                // Check if array[n] is the smallest in the range
+                if (arr[n] == min)
+                {
+                    break;  // Stop shuffling and move to the next element
+                }
+            }
         }
+
+        System.out.print("\nSorted array: ");
+        for(int x : arr)
+        {
+            System.out.print(x + " ");
+        }
+        System.out.println("\nWith a total of " + count + " passes");
     }
 }
